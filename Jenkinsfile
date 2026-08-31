@@ -1,7 +1,12 @@
 @Library("jenkins-shared-library@main") _
 
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'python:3.11-slim'
+            args '--user root'
+        }
+    }
 
     stages {
 
@@ -15,7 +20,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Installing dependencies...'
-                sh 'pip install -r requirements.txt --break-system-packages'
+                sh 'pip install -r requirements.txt'
             }
         }
 
